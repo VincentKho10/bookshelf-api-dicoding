@@ -52,4 +52,4 @@ const createBookHandler = (req, h) => {
   }
 };
 
-module.exports = { createBookHandler };
+module.exports = createBookHandler;

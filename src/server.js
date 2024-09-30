@@ -1,6 +1,9 @@
 const Hapi = require("@hapi/hapi");
-const { createBookHandler } = require("./handler/postBook");
-const { getAllBookHandler } = require("./handler/getAllBook");
+const createBookHandler = require("./handler/postBook");
+const getAllBookHandler = require("./handler/getAllBook");
+const getOneBookHandler = require('./handler/getOneBook')
+const updateBookHandler = require('./handler/updateBook');
+const deleteBookHandler = require("./handler/deleteBook");
 
 const init = async () => {
   const hostname = "localhost";
@@ -25,9 +28,24 @@ const init = async () => {
       handler: getAllBookHandler,
     },
     {
+      method: 'GET',
+      path: '/books/{id}',
+      handler: getOneBookHandler
+    },
+    {
       method: "POST",
       path: "/books",
       handler: createBookHandler
+    },
+    {
+      method: 'PUT',
+      path: '/books/{id}',
+      handler: updateBookHandler
+    },
+    {
+      method: 'DELETE',
+      path: '/books/{id}',
+      handler: deleteBookHandler
     },
     {
       method: "*",

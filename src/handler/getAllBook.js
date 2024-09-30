@@ -1,11 +1,34 @@
 const books = require("../books");
 
 const getAllBookHandler = (req, h) => {
+  const {reading, finished, name} = req.query
+  const searched = books.filter((v)=>{
+    if(reading){
+      return v.reading==reading
+    }
+    else if(finished){
+      return v.finished==finished
+    }
+    else if(name){
+      return v.name.toLowerCase().includes(name.toLowerCase())
+    }else{
+      return v
+    }
+  })
+  
+  const toShow = searched.map((v)=>{
+    return {
+      id:v.id,
+      name:v.name,
+      publisher:v.publisher,
+    }
+  })
+
   if (books.length > 0) {
     const res = h.response({
       status: "success",
       data: {
-        books: books,
+        books: toShow,
       },
     });
     res.type("application/json");
@@ -24,4 +47,4 @@ const getAllBookHandler = (req, h) => {
   return res;
 };
 
-module.exports = { getAllBookHandler };
+module.exports = getAllBookHandler;
